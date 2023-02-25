@@ -18,3 +18,7 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ROUTE_DELIVERY }}'
           channelId: live
           projectId: route-delivery
+permissions:
+  contents: 'read'
+  id-token: 'write'
+  issues: 'write' #__This fixed the HttpError: Resource not accessible by integration
