@@ -1,17 +1,15 @@
 import React from 'react'
+import DeliveriesGrid from '../deliveries/DeliveriesGrid'
+import OrdersGrid from '../orders/OrdersGrid'
 
 const DispatcherTab = () => {
   return (
     <div>
       <h3>
-      Dispatcher Dashboard
+        Dispatcher Dashboard
       </h3>
-      <div>
-        Upcoming Scheduled Deliveries Grid
-      </div>
-      <div>
-        Customers Ready For Pickup Grid
-      </div>
+      <DeliveriesGrid />
+      <OrdersGrid />
     </div>
   )
 }
