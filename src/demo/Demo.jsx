@@ -5,7 +5,7 @@ import DemoTabs from './DemoTabs'
 const Demo = () => {
   return (
     <Box>
-      Demo
+      <h3>Demo</h3>
     <DemoTabs />
     </Box>
   )
