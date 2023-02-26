@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import Spinner from '../../_utils/Spinner';
+import Delivery from './Delivery';
 
 const dataRows = [
   { id: 1, startTime: new Date("2/27/2023 06:00:00"), assignedDriver: 'Bo', pickups: 5 },
@@ -13,6 +14,7 @@ const dataRows = [
 
 const DeliveriesGrid = ({ driver }) => {
   const [rows, setRows] = useState();
+  const [selectedDelivery, setSelectedDelivery] = useState();
   useEffect(() => {
     if (!driver) return setRows(dataRows);
     else {
@@ -31,11 +33,15 @@ const DeliveriesGrid = ({ driver }) => {
     else return `0${num}`
   }
   const onViewButtonClick = e => {
-    alert("whatup")
+    setSelectedDelivery(e);
+  }
+
+  const closeDelivery = () => {
+    setSelectedDelivery();
   }
 
   const renderActionCell = e => {
-    return <Button onClick={onViewButtonClick}>View</Button>
+    return <Button onClick={() => onViewButtonClick(e.row)}>View</Button>
   }
 
   const columns = [
@@ -51,7 +57,9 @@ const DeliveriesGrid = ({ driver }) => {
     { field: '', renderCell: renderActionCell }
 
   ];
-if(!rows) return <Spinner />
+  if (!rows) return <Spinner />
+  if (selectedDelivery) return (<div style={{ height: 400, width: '100%', marginBottom: 60 }}>
+    <Delivery delivery={selectedDelivery} closeDelivery={closeDelivery} /></div>)
   return (
     <div style={{ height: 400, width: '100%', marginBottom: 60 }}>
       <h4>Upcoming Deliveries</h4>
