@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import { getReadableTime } from '../../_utils/_utils';
+import DeliveryMap from './DeliveryMap';
 
 const Delivery = ({ delivery, closeDelivery }) => {
   const { id, startTime, assignedDriver, pickups } = delivery;
@@ -12,6 +13,8 @@ const Delivery = ({ delivery, closeDelivery }) => {
       <div>start Time: {getReadableTime(startTime)}</div>
       <div>driver: {assignedDriver}</div>
       <div>pickups: {pickups}</div>
+      <div>map</div>
+      <DeliveryMap />
     </div>
   )
 }
