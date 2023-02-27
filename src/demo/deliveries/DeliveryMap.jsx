@@ -22,6 +22,30 @@ const DeliveryMap = () => {
 
   useEffect(() => {
     if (!map.current || !destinations || destinations.length <1) return; // wait for map to initialize
+    
+  const addPinsToMap = (coordsArr) => {
+    const pointFeatures = coordsArr.map(getFeature)
+    const pointFeatureColl = {
+      type: 'FeatureCollection',
+      features: pointFeatures
+    };
+    if (map.current.getLayer('end')) {
+      map.current.getSource('end').setData(pointFeatureColl);
+    } else {
+      map.current.addLayer({
+        id: 'end',
+        type: 'circle',
+        source: {
+          type: 'geojson',
+          data: pointFeatureColl
+        },
+        paint: {
+          'circle-radius': 10,
+          'circle-color': '#f30'
+        }
+      });
+    }
+  }
     const eff = async () => {
       const data = await getDirections(getOriginCoords(), destinations);
       const coordinates = data.routes[0].geometry.coordinates;
@@ -71,29 +95,6 @@ const DeliveryMap = () => {
     return feature
   }
 
-  const addPinsToMap = (coordsArr) => {
-    const pointFeatures = coordsArr.map(getFeature)
-    const pointFeatureColl = {
-      type: 'FeatureCollection',
-      features: pointFeatures
-    };
-    if (map.current.getLayer('end')) {
-      map.current.getSource('end').setData(pointFeatureColl);
-    } else {
-      map.current.addLayer({
-        id: 'end',
-        type: 'circle',
-        source: {
-          type: 'geojson',
-          data: pointFeatureColl
-        },
-        paint: {
-          'circle-radius': 10,
-          'circle-color': '#f30'
-        }
-      });
-    }
-  }
 
   useEffect(() => {
     if (map.current) return; // initialize map only once

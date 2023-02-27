@@ -14,10 +14,3 @@ const getUrl = (coors) => {
   return url;
   // const req= 'https://api.mapbox.com/directions/v5/mapbox/driving/-84.518641,39.134270;-84.512023,39.102779?geometries=geojson&access_token=pk.eyJ1IjoiZXJpY3lhcmhhbSIsImEiOiJjbGVtdWN2MHIwMDE2M3hsazA2aGt0YXN3In0.62ElsBzews_TTWShyekDUQ'  
 }
-const getCoorString = (coords) => {
-  var coorString = coords.join(";");
-  coorString = coords.join(c => {
-    return `${c[0]},${c[1]}`;
-  }, ';')
-  return coorString;
-}
