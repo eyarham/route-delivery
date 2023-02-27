@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import React from 'react';
+import OrdersGrid from '../orders/OrdersGrid';
 
 const NewDelivery = ({ orders, close }) => {
   const [value, setValue] = React.useState(dayjs('2022-04-07'));
@@ -25,14 +26,7 @@ const NewDelivery = ({ orders, close }) => {
         />
       </LocalizationProvider>
       <h4>Included orders:</h4>
-
-      {orders.map((o, i) => {
-        const { id, timeReady, distance, lastName } = o;
-        return (<div key={i}>
-
-          <div>{lastName}</div>
-        </div>);
-      })}
+      <OrdersGrid orders={orders} readonly/>
       <Button variant="contained" onClick={onCreateClick}>Create</Button>
 
     </div>
