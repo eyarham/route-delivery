@@ -1,10 +1,23 @@
 import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useState } from 'react';
+import NewDelivery from '../deliveries/NewDelivery';
 import Order from './Order';
 
-const OrdersGrid = () => {
+
+const dataRows = [
+  { id: 1, timeReady: new Date("2/22/2023 18:12:00"), distance: "1.5mi", lastName: "Bishop" },
+  { id: 2, timeReady: new Date("2/22/2023 10:33:00"), distance: "2.6mi", lastName: "Smittens" },
+  { id: 3, timeReady: new Date("2/23/2023 06:07:00"), distance: "1.2mi", lastName: "Loggins" },
+  { id: 4, timeReady: new Date("2/24/2023 17:24:00"), distance: "0.8mi", lastName: "Standard" },
+  { id: 5, timeReady: new Date("2/26/2023 09:30:00"), distance: "4.6mi", lastName: "Choof" },
+];
+
+const OrdersGrid = ({ orders, readonly }) => {
   const [selectedOrder, setSelectedOrder] = useState();
+  const [selectedOrders, setSelectedOrders] = useState();
+  const [showNewDelivery, setShowNewDelivery] = useState();
+  const rows = orders || dataRows;
   const renderTimeCell = e => {
     const dateTime = e.value;
     const returnString = `${dateTime.getMonth() + 1}/${dateTime.getDate()}/${dateTime.getFullYear()}, ${getTwoDigit(dateTime.getHours())}:${getTwoDigit(dateTime.getMinutes())}`;
@@ -16,17 +29,9 @@ const OrdersGrid = () => {
     else return `0${num}`
   }
 
-  
+
   const renderActionCell = e => {
     return <Button onClick={() => onViewButtonClick(e.row)}>View</Button>
-  }
-
-  
-  const onViewButtonClick = e => {
-    setSelectedOrder(e);
-  }
-  const closeOrder = () => {
-    setSelectedOrder();
   }
 
   const columns = [
@@ -37,23 +42,38 @@ const OrdersGrid = () => {
     { field: '', renderCell: renderActionCell }
 
   ];
+  const onViewButtonClick = e => {
+    setSelectedOrder(e);
+  }
+  const closeOrder = () => {
+    setSelectedOrder();
+  }
 
-  const rows = [
-    { id: 1,  timeReady: new Date("2/22/2023 18:12:00"), distance: "1.5mi", lastName:"Bishop" },
-    { id: 2,  timeReady: new Date("2/22/2023 10:33:00"), distance: "2.6mi", lastName:"Smittens" },
-    { id: 3,  timeReady: new Date("2/23/2023 06:07:00"), distance: "1.2mi", lastName:"Loggins" },
-    { id: 4,  timeReady: new Date("2/24/2023 17:24:00"), distance: "0.8mi", lastName:"Standard" },
-    { id: 5,  timeReady: new Date("2/26/2023 09:30:00"), distance: "4.6mi", lastName:"Choof" },
-  ];
-  if(selectedOrder) return (<div style={{ height: 400, width: '100%' }}><Order order={selectedOrder} close={closeOrder}/></div>)
+  const onSelectChange = e => {
+
+    const newSelectedOrders = rows.filter(r => e.includes(r.id))
+    setSelectedOrders(newSelectedOrders);
+  }
+  const createDelivery = () => {
+    setShowNewDelivery(true);
+  }
+  const closeNewDelivery = () => {
+    setShowNewDelivery(false);
+  }
+  if (selectedOrder) return (<div style={{ height: 400, width: '100%' }}><Order order={selectedOrder} close={closeOrder} /></div>)
+  if (showNewDelivery) return (<div style={{ height: 400, width: '100%' }}><NewDelivery orders={selectedOrders} close={closeNewDelivery} /></div>)
   return (
     <div style={{ height: 400, width: '100%' }}>
-      <h4>Orders Ready For Pickup</h4>
+      {!readonly && <h4>Orders Ready For Pickup</h4>}
+      {!readonly && <Button disabled={!selectedOrders || selectedOrders.length < 1} variant="contained" onClick={createDelivery}>Create Delivery For Selected</Button>}
+      
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
+        checkboxSelection={!readonly}
+        onSelectionModelChange={onSelectChange}
       />
     </div>
   )
