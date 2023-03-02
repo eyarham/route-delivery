@@ -1,27 +1,30 @@
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect, useRef, useState } from 'react';
-import {  getOriginCoords } from '../orders/api';
-import { getDirections } from './directions';
-
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZXJpY3lhcmhhbSIsImEiOiJjbGVtdWN2MHIwMDE2M3hsazA2aGt0YXN3In0.62ElsBzews_TTWShyekDUQ';
 
-const DeliveryMap = ({ destinationArr }) => {
+const DeliveryMap = ({ pinCoords, routeCoords }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(-81.577167);
   const [lat, setLat] = useState(41.508132);
   const [zoom, setZoom] = useState(11);
-  const [destinations, setDestinations] = useState([])
+  const [styleLoaded, setStyleLoaded] = useState();
 
   useEffect(() => {
-    const destinations = destinationArr;
-    setDestinations(destinations);
-  }, [destinationArr])
+    if (!map.current) return; // wait for map to initialize
+    map.current.on('styledata', function () {
+      setStyleLoaded(true)
+    });
+  }, [])
+
 
 
   useEffect(() => {
-    if (!map.current || !destinations || destinations.length < 1) return; // wait for map to initialize
+    if (!map.current || !styleLoaded) return; // wait for map to initialize
+
+    routeCoords && addRouteToMap(routeCoords);
 
     const addPinsToMap = (coordsArr) => {
       const pointFeatures = coordsArr.map(getFeature)
@@ -46,14 +49,9 @@ const DeliveryMap = ({ destinationArr }) => {
         });
       }
     }
-    const eff = async () => {
-      const data = await getDirections(getOriginCoords(), destinations);
-      const coordinates = data.routes[0].geometry.coordinates;
-      addRouteToMap(coordinates)
-      addPinsToMap(data.waypoints);
-    }
-    eff();
-  }, [destinations])
+    pinCoords && addPinsToMap(pinCoords);
+
+  }, [pinCoords, routeCoords, styleLoaded])
 
   const addRouteToMap = (coordinates) => {
     const geojson = {
@@ -116,9 +114,10 @@ const DeliveryMap = ({ destinationArr }) => {
   });
 
   return (
-    <div>
-      <div ref={mapContainer} className="map-container" />
-    </div>
+    <div
+      ref={mapContainer}
+      className="map-container"
+      style={{ height: 250}} />
   )
 }
 

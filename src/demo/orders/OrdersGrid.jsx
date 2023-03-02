@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { Box } from '@mui/system';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useState } from 'react';
 import NewDelivery from '../deliveries/NewDelivery';
@@ -56,10 +57,9 @@ const OrdersGrid = ({ orders, readonly }) => {
   if (selectedOrder) return (<div style={{ height: 400, width: '100%' }}><Order order={selectedOrder} close={closeOrder} /></div>)
   if (showNewDelivery) return (<div style={{ height: 400, width: '100%' }}><NewDelivery orders={selectedOrders} close={closeNewDelivery} /></div>)
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400 }}>
       {!readonly && <h4>Orders Ready For Pickup</h4>}
       {!readonly && <Button disabled={!selectedOrders || selectedOrders.length < 1} variant="contained" onClick={createDelivery}>Create Delivery For Selected</Button>}
-      
       <DataGrid
         rows={rows}
         columns={columns}
@@ -68,7 +68,7 @@ const OrdersGrid = ({ orders, readonly }) => {
         checkboxSelection={!readonly}
         onSelectionModelChange={onSelectChange}
       />
-    </div>
+    </Box>
   )
 }
 

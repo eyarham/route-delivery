@@ -1,3 +1,5 @@
+import { Grid } from '@mui/material'
+import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import DeliveriesGrid from '../deliveries/DeliveriesGrid'
 import { getOrders } from '../orders/api'
@@ -9,11 +11,17 @@ const DispatcherTab = () => {
     setOrders(getOrders());
   }, []);
   return (
-    <div>
+    <Box >
       <h3>Dispatcher Dashboard</h3>
-      <DeliveriesGrid />
-      <OrdersGrid orders={orders} />
-    </div>
+      <Grid container spacing={2}>
+        <Grid item xs={12} xl={6}>
+          <DeliveriesGrid />
+        </Grid>
+        <Grid item xs={12} xl={6}>
+          <OrdersGrid orders={orders} />
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
