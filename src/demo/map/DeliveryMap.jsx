@@ -17,7 +17,7 @@ const DeliveryMap = ({ pinCoords, routeCoords }) => {
     map.current.on('styledata', function () {
       setStyleLoaded(true)
     });
-  }, [])
+  })
 
 
 
