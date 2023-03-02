@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { Box } from '@mui/system';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import Spinner from '../../_utils/Spinner';
@@ -52,10 +53,10 @@ const DeliveriesGrid = ({ driver }) => {
 
   ];
   if (!rows) return <Spinner />
-  if (selectedDelivery) return (<div style={{ height: 400, width: '100%', marginBottom: 60 }}>
+  if (selectedDelivery) return (<div style={{  width: '100%', marginBottom: 60 }}>
     <Delivery delivery={selectedDelivery} closeDelivery={closeDelivery} /></div>)
   return (
-    <div style={{ height: 400, width: '100%', marginBottom: 60 }}>
+      <Box sx={{height:400, marginBottom:6}}>
       <h4>Upcoming Deliveries</h4>
       <DataGrid
         rows={rows}
@@ -63,7 +64,7 @@ const DeliveriesGrid = ({ driver }) => {
         pageSize={5}
         rowsPerPageOptions={[5]}
       />
-    </div>
+      </Box>
   )
 }
 
