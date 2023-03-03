@@ -1,4 +1,5 @@
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import { Button } from '@mui/material';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -17,15 +18,11 @@ const DeliveryMap = ({ pinCoords, routeCoords }) => {
     map.current.on('styledata', function () {
       setStyleLoaded(true)
     });
-  }, [])
-
-
+  })
 
   useEffect(() => {
     if (!map.current || !styleLoaded) return; // wait for map to initialize
-
     routeCoords && addRouteToMap(routeCoords);
-
     const addPinsToMap = (coordsArr) => {
       const pointFeatures = coordsArr.map(getFeature)
       const pointFeatureColl = {
@@ -50,8 +47,7 @@ const DeliveryMap = ({ pinCoords, routeCoords }) => {
       }
     }
     pinCoords && addPinsToMap(pinCoords);
-
-  }, [pinCoords, routeCoords, styleLoaded])
+  }, [pinCoords,routeCoords, styleLoaded])
 
   const addRouteToMap = (coordinates) => {
     const geojson = {
@@ -113,11 +109,18 @@ const DeliveryMap = ({ pinCoords, routeCoords }) => {
     });
   });
 
+  const onRefreshClick= ()=>{    
+    setStyleLoaded(true)
+  }
+
   return (
+    <div>
     <div
       ref={mapContainer}
       className="map-container"
-      style={{ height: 250}} />
+      style={{ height: 250 }} />
+      <Button onClick={onRefreshClick}>refresh</Button>
+      </div>
   )
 }
 
