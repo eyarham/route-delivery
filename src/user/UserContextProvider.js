@@ -3,7 +3,7 @@ import { FirebaseContext } from '../firebase/FirebaseContextProvider';
 import userApi from './api';
 //import { getByAuthIdSub } from './api';
 
-const UserContext = createContext();
+export const UserContext = createContext();
 const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState();
 
@@ -19,11 +19,10 @@ const UserContextProvider = ({ children }) => {
   //   return <div>loading...</div>
   // }
   return (
-    <UserContext.Provider value={{ userId: user && user.id, user: user && user.data(), api }}>
+    <UserContext.Provider value={{ id: user && user.id, user: user && user.data(), api }}>
       {children}
     </UserContext.Provider>
   )
 }
 
-export { UserContext };
 export default UserContextProvider
