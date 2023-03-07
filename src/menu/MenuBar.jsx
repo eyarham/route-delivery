@@ -23,8 +23,7 @@ const MenuBar = () =>{
   const { user } = useContext(UserContext);
   //const pages = ['add new'];
   useEffect(() => {
-    const pages = ['add new'];
-    setPages(['add new']);
+    const pages = ['demo','get started', 'orgs'];
     if (isModerator) { pages.push('moderate') }
     if (isAdmin) { pages.push('admin') }
     setPages(pages)
@@ -40,8 +39,13 @@ const MenuBar = () =>{
   const handleCloseNavMenu = (e) => {
     setAnchorElNav(null);
     switch (e.target.textContent) {
-      case "add new":
-        return navigate("/space")
+      case "demo":
+        return navigate("/demo")
+        case "orgs":
+          return navigate("/orgs")
+        
+      case "get started":
+        return navigate("/start")
       case "moderate":
         return navigate("/moderate")
       case "admin":

@@ -39,10 +39,10 @@ const api = (db, collectionString) => {
     return unsub;
   }
 
-  const createDoc = async (doc, user) => {
+  const createDoc = async (doc, userId) => {
 
     const docToAdd = {
-      createdBy: (user && user.id) || "unknown",
+      createdBy: (userId) || "unknown",
       createdDate: new Date(),
       ...doc
     }
