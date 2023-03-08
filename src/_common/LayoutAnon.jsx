@@ -4,11 +4,10 @@ import React from 'react';
 import { Outlet } from "react-router-dom";
 import FirebaseContextProvider from '../firebase/FirebaseContextProvider';
 import MenuBar from '../menu/MenuBar';
-import OrgContextProvider from '../org/OrgContextProvider';
 import UserContextProvider from '../user/UserContextProvider';
 import ApiContextProvider from './ApiContextProvider';
 
-const Layout = () => {
+const LayoutAnon = () => {
   return (
     <div>
       <FirebaseContextProvider>
@@ -16,15 +15,13 @@ const Layout = () => {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           {/* <AuthWrapper> */}
-          <UserContextProvider>
-            <OrgContextProvider>
-              <MenuBar />
-              <Container>
-                <Box>
-                  <Outlet />
-                </Box>
-              </Container>
-            </OrgContextProvider>
+          <UserContextProvider allowAnon={true}>
+            <MenuBar />
+            <Container>
+              <Box>
+                <Outlet />
+              </Box>
+            </Container>
           </UserContextProvider>
           {/* </AuthWrapper> */}
         </ApiContextProvider>
@@ -33,4 +30,4 @@ const Layout = () => {
   )
 }
 
-export default Layout
+export default LayoutAnon

@@ -4,7 +4,9 @@ const orgApi = (db) => {
 
   const { getByIdSub, createDoc, getDocsSub } = api(db, "orgs");
   const create = async (name, drivers, customers, userId) => {
+    const id = crypto.randomUUID();
     const newOrg = {
+      id,
       name,
       drivers,
       customers,
@@ -21,14 +23,25 @@ const orgApi = (db) => {
     })
   }
 
-  const getOrgByIdSub = (id, userId, callback) => {
+  const getUserInOrgSub = (id, userId, callback) => {
     return getByIdSub(id, doc => {
       if (doc.data().users.indexOf(userId) > -1) {
-        callback(doc);
+        callback(true);
       }
+      else
+        callback(false);
     })
+
   }
 
-  return { create, getForUserSub, getOrgByIdSub };
+  const getOrgByIdSub = (id, userId, callback) => {
+    return getByIdSub(id, doc => getUserInOrgSub(id, userId, result => result === true && callback(doc))
+    )
+  }
+  const getOriginCoords = (id, callback)=>{
+    return getByIdSub(id, callback )
+  }
+
+  return { create, getForUserSub, getOrgByIdSub, getUserInOrgSub, getOriginCoords };
 }
 export default orgApi;

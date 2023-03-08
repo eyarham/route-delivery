@@ -14,7 +14,7 @@ import { UserContext } from '../user/UserContextProvider';
 import UserMenu from '../user/UserMenu';
 import Spinner from '../_utils/Spinner';
 
-const MenuBar = () =>{
+const MenuBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate()
   const [isModerator, setIsModerator] = useState();
@@ -23,7 +23,7 @@ const MenuBar = () =>{
   const { user } = useContext(UserContext);
   //const pages = ['add new'];
   useEffect(() => {
-    const pages = ['demo','get started', 'orgs'];
+    const pages = ['demo', 'get started', 'orgs', 'dashboard'];
     if (isModerator) { pages.push('moderate') }
     if (isAdmin) { pages.push('admin') }
     setPages(pages)
@@ -41,9 +41,11 @@ const MenuBar = () =>{
     switch (e.target.textContent) {
       case "demo":
         return navigate("/demo")
-        case "orgs":
-          return navigate("/orgs")
-        
+      case "orgs":
+        return navigate("/orgs")
+      case "dashboard":
+        return navigate("/dashboard")
+
       case "get started":
         return navigate("/start")
       case "moderate":

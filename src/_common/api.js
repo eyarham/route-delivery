@@ -101,6 +101,7 @@ const api = (db, collectionString) => {
     });
     return unsub;
   }
+
   const getDocsByFieldsSub = (fieldValueArray, callback) => {
     const whereClause = fieldValueArray.map(x => where(x.field, "==", x.value));
     const q = query(getCollection(), ...whereClause);
@@ -109,6 +110,7 @@ const api = (db, collectionString) => {
     });
     return unsub;
   }
+
   const getDocsByField = async (field, value) => {
     const q = query(getCollection(), where(field, "==", value));
     const snapshot = await getDocs(q);
