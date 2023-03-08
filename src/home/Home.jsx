@@ -1,8 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+
   return (
-    <div>Home</div>
+    <div>
+
+      <div>welcome</div>
+      <div>we are trying to do the thing</div>
+      <Link to="/signup">create an account</Link> to get started
+    </div>
   )
 }
 
