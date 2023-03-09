@@ -12,16 +12,13 @@ const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const { orgId } = useContext(OrgContext);
   const { id: userId } = useContext(UserContext);
-  const { getByOrgIdSub, create, deleteDoc } = useContext(CustomersApiContext);
+  const { getByOrgIdSub, deleteDoc } = useContext(CustomersApiContext);
   const { create: createOrder } = useContext(OrdersApiContext);
   useEffect(() => {
     return getByOrgIdSub(orgId, setCustomers);
   }, [getByOrgIdSub, orgId]);
   const toggleShowAdd = () => {
     setShowNew(!showNew);
-  }
-  const onCreateCustomer = async customer => {
-    return await create(customer.name, customer.address, orgId, userId);
   }
   const onDelete = async (id) => {
     await deleteDoc(id);
@@ -33,7 +30,7 @@ const Customers = () => {
     <Paper sx={{ m: 1, p: 1 }}>
       <h4>Customers</h4>
       {!showNew && <Button onClick={toggleShowAdd}>add</Button>}
-      {showNew && <NewCustomer onCreate={onCreateCustomer} onCancel={toggleShowAdd} />}
+      {showNew && <NewCustomer  onCancel={toggleShowAdd} />}
       <CustomersGrid customers={customers} onDelete={onDelete} onCreateClick={onCreateClick} />
     </Paper>
   )

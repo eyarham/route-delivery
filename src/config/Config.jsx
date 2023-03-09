@@ -4,17 +4,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from '../firebase/FirebaseContextProvider';
 import { UserContext } from '../user/UserContextProvider';
 import Spinner from '../_utils/Spinner';
-import configApi from './api';
+import configApi from './_api';
 
 const Config = () => {
   const { user } = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState();
-  const [updatedApiNinjasApiKey, setUpdatedApiNinjasApiKey] = useState();
+  const [updatedMapBoxAccessToken, setUpdatedMapBoxAccessToken] = useState();
   const [existingConfig, setExistingConfig] = useState();
-  const {db} =useContext( FirebaseContext);
-  const {getActiveConfigSub, updateConfigValue } = configApi(db);
+  const { db } = useContext(FirebaseContext);
+  const { getActiveConfigSub, updateConfigValue } = configApi(db);
   useEffect(() => {
-    if (user && user.data().isAdmin) { setIsAdmin(true) }
+    if (user && user.isAdmin) { setIsAdmin(true) }
   }, [user]);
 
   useEffect(() => {
@@ -22,24 +22,23 @@ const Config = () => {
   }, [getActiveConfigSub])
 
   const onChangeApiKey = e => {
-    setUpdatedApiNinjasApiKey(e.target.value);
+    setUpdatedMapBoxAccessToken(e.target.value);
   }
 
   const onSaveClick = async () => {
-    await updateConfigValue({ apiNinjasApiKey: updatedApiNinjasApiKey });
+    await updateConfigValue({ mapBoxAccessToken: updatedMapBoxAccessToken });
     alert("saved successfully");
   }
 
   if (!isAdmin) return <div>you are not authorized</div>
   if (!existingConfig) return <Spinner />
-  const { apiNinjasApiKey } = existingConfig.data();
+  const { mapBoxAccessToken } = existingConfig.data();
   return (
     <Box sx={{ m: 1 }}>
       <h3>config</h3>
       <div>
-        <TextField placeholder="apiNinjasApiKey"
-          defaultValue={apiNinjasApiKey}
-          onChange={onChangeApiKey} /></div>
+        mapBoxAccessToken: <TextField placeholder="mapBoxAccessToken" defaultValue={mapBoxAccessToken} onChange={onChangeApiKey}></TextField>
+      </div>
       <Button variant="contained" onClick={onSaveClick}>Save</Button>
     </Box>
   )
