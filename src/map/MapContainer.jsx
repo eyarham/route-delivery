@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
+import { ConfigContext } from '../config/ConfigContextProvider'
 import { OrgContext } from '../org/OrgContextProvider'
 import { getDirections } from '../_common/directions'
 import Spinner from '../_utils/Spinner'
@@ -12,12 +13,12 @@ const MapContainer = ({ destinations }) => {
   const [routeCoords, setRouteCoords] = useState()
   const [hasRendered, setHasRendered] = useState(false)
   const { org } = useContext(OrgContext);
-
+  const {mapBoxAccessToken} = useContext(ConfigContext);
   useEffect(() => {
     if (!destinations || hasRendered) return
     const eff = async () => {
       const { coords } = org;
-      const data = await getDirections(coords, destinations);
+      const data = await getDirections(coords, destinations, mapBoxAccessToken);
       const { routes, waypoints } = data;
       const { legs, geometry } = routes[0];
       setPinCoords(waypoints);

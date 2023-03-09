@@ -22,7 +22,7 @@ const NewRoute = ({ orders, close }) => {
   }
   return (
     <div>
-      <Button onClick={close}>Back</Button>
+      <Button onewnClick={close}>Back</Button>
       <h4>New Delivery</h4>
       <div>        
         <Button variant="contained" onClick={onCreateClick}>schedule</Button>
@@ -33,7 +33,7 @@ const NewRoute = ({ orders, close }) => {
           label="Schedule DateTime"
           value={value}
           onChange={(newValue) => {
-            setValue(newValue);
+            setValue(newValue.$d);
           }}
         />
       </LocalizationProvider>
