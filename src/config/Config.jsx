@@ -9,7 +9,7 @@ import configApi from './_api';
 const Config = () => {
   const { user } = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState();
-  const [updatedApiNinjasApiKey, setUpdatedApiNinjasApiKey] = useState();
+  const [updatedMapBoxAccessToken, setUpdatedMapBoxAccessToken] = useState();
   const [existingConfig, setExistingConfig] = useState();
   const { db } = useContext(FirebaseContext);
   const { getActiveConfigSub, updateConfigValue } = configApi(db);
@@ -22,11 +22,11 @@ const Config = () => {
   }, [getActiveConfigSub])
 
   const onChangeApiKey = e => {
-    setUpdatedApiNinjasApiKey(e.target.value);
+    setUpdatedMapBoxAccessToken(e.target.value);
   }
 
   const onSaveClick = async () => {
-    await updateConfigValue({ apiNinjasApiKey: updatedApiNinjasApiKey });
+    await updateConfigValue({ mapBoxAccessToken: updatedMapBoxAccessToken });
     alert("saved successfully");
   }
 
@@ -37,7 +37,7 @@ const Config = () => {
     <Box sx={{ m: 1 }}>
       <h3>config</h3>
       <div>
-        mapBoxAccessToken: <TextField placeholder="mapBoxAccessToken" defaultValue={mapBoxAccessToken}></TextField>
+        mapBoxAccessToken: <TextField placeholder="mapBoxAccessToken" defaultValue={mapBoxAccessToken} onChange={onChangeApiKey}></TextField>
       </div>
       <Button variant="contained" onClick={onSaveClick}>Save</Button>
     </Box>

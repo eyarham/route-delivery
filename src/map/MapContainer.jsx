@@ -13,7 +13,7 @@ const MapContainer = ({ destinations }) => {
   const [routeCoords, setRouteCoords] = useState()
   const [hasRendered, setHasRendered] = useState(false)
   const { org } = useContext(OrgContext);
-  const {mapBoxAccessToken} = useContext(ConfigContext);
+  const { mapBoxAccessToken } = useContext(ConfigContext);
   useEffect(() => {
     if (!destinations || hasRendered) return
     const eff = async () => {
@@ -27,7 +27,7 @@ const MapContainer = ({ destinations }) => {
       setHasRendered(true);
     }
     eff();
-  }, [destinations, hasRendered, org])
+  }, [destinations, hasRendered, org, mapBoxAccessToken])
   if (!destinations || !pinCoords || !routeCoords) return <Spinner />
   return (
     <Grid container spacing={1} sx={{ height: 200 }}>
