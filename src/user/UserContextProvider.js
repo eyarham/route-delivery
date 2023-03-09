@@ -1,27 +1,26 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FirebaseContext } from '../firebase/FirebaseContextProvider';
-import userApi from './api';
+import Spinner from '../_utils/Spinner';
+import { UserApiContext } from './UserApiContextProvider';
 //import { getByAuthIdSub } from './api';
 
 export const UserContext = createContext();
-const UserContextProvider = ({ children, allowAnon }) => {
-  const [user, setUser] = useState();
+const UserContextProvider = ({ children }) => {
+  const [value, setValue] = useState();
 
-  const { db, auth } = useContext(FirebaseContext);
-  const api = userApi(db, auth);
+  const { getCurrentSub } = useContext(UserApiContext);
   useEffect(() => {
-    const { getCurrentSub } = api;
-    return getCurrentSub(setUser);
-  }, [api])
-
-  // if (user === undefined || user === null
-  // ) {
-  //   return <div>loading...</div>
-  // }
-  if(!user && !allowAnon) return <Link to={"/signin"}>login or sign up</Link>
+    return getCurrentSub(user => {
+      if (user) {
+        setValue({ id: user.id, userId: user.id, user: user.data() })
+      }
+      else {
+        setValue({ id: null, user: null })
+      }
+    });
+  }, [getCurrentSub])
+  if (!value) return <Spinner />
   return (
-    <UserContext.Provider value={{ id: user && user.id, user: user && user.data(), api }}>
+    <UserContext.Provider value={value}>
       {children}
     </UserContext.Provider>
   )

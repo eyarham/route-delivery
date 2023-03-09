@@ -10,6 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { OrgContext } from '../org/OrgContextProvider';
 import { UserContext } from '../user/UserContextProvider';
 import UserMenu from '../user/UserMenu';
 import Spinner from '../_utils/Spinner';
@@ -17,19 +18,32 @@ import Spinner from '../_utils/Spinner';
 const MenuBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate()
-  const [isModerator, setIsModerator] = useState();
   const [isAdmin, setIsAdmin] = useState();
   const [pages, setPages] = useState();
+  const [headerText, setHeaderText] = useState('route delivery');
+  const [headerTarget, setHeaderTarget] = useState("/")
   const { user } = useContext(UserContext);
+  const orgContext = useContext(OrgContext);
   //const pages = ['add new'];
   useEffect(() => {
-    const pages = ['demo', 'get started', 'orgs', 'dashboard'];
-    if (isModerator) { pages.push('moderate') }
+    const pages = ['home'];
+    
+    if (orgContext && orgContext.org) {
+      pages.push('dashboard', 'orgs',)
+      setHeaderText(orgContext.org.name)
+      setHeaderTarget('/dashboard')
+    }
+    else
+    {
+      setHeaderText('route delivery')
+      setHeaderTarget('/')
+
+    }
+    pages.push('demo');
     if (isAdmin) { pages.push('admin') }
     setPages(pages)
-  }, [isModerator, isAdmin])
+  }, [isAdmin, orgContext])
   useEffect(() => {
-    if (user && user.isModerator) { setIsModerator(true) }
     if (user && user.isAdmin) { setIsAdmin(true) }
   }, [user]);
   const handleOpenNavMenu = (event) => {
@@ -41,6 +55,8 @@ const MenuBar = () => {
     switch (e.target.textContent) {
       case "demo":
         return navigate("/demo")
+      case "home":
+        return navigate("/")
       case "orgs":
         return navigate("/orgs")
       case "dashboard":
@@ -58,7 +74,7 @@ const MenuBar = () => {
   };
 
   const onHeaderClick = () => {
-    navigate("/")
+    navigate(headerTarget)
   }
 
   if (!pages) return <Spinner />
@@ -82,7 +98,7 @@ const MenuBar = () => {
               textDecoration: 'none',
             }}
           >
-            route delivery
+            {headerText}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -138,7 +154,7 @@ const MenuBar = () => {
               textDecoration: 'none',
             }}
           >
-            route delivery
+            {headerText}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

@@ -27,7 +27,6 @@ const NewCustomer = ({  onCancel }) => {
   }
   const onCreateClick = async () => {
     await create(name, address, coords, orgId, userId);
-
     setName('');
     setAddress('');
   }
@@ -35,7 +34,7 @@ const NewCustomer = ({  onCancel }) => {
     <Paper>
       <TextField onChange={onNameChange} value={name} placeholder="name"></TextField>
       {/* <TextField onChange={onAddressChange} value={address} placeholder="address"></TextField> */}
-      <Autofill onChange={onAddressChange} value={address} placeholder="address" />
+      <Autofill onChange={onAddressChange}setValue={onAddressChange} value={address} placeholder="address" />
 
       <Button disabled={!isValid} onClick={onCreateClick}>create</Button>
       <Button onClick={onCancel}>cancel</Button>

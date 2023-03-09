@@ -156,12 +156,17 @@ const userApi = (db, auth) => {
     await signInWithEmailAndPassword(auth, email, password)
   }
 
+  const setActiveOrgId = async (userId, activeOrgId) => {
+    await updateField(userId, { activeOrgId })
+  }
+
   return {
     create,
     get,
     getByIdSub,
     getCurrentSub,
     set,
+    setActiveOrgId,
     updateUserEmail,
     getUserName,
     getCurrentUserId,
