@@ -1,40 +1,29 @@
-import { Button } from '@mui/material';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../user/UserContextProvider';
-import Spinner from '../_utils/Spinner';
 import { OrgApiContext } from './OrgApiContextProvider';
 
 export const OrgContext = createContext();
 const OrgContextProvider = ({ children }) => {
-  const [org, setOrg] = useState();
-  const [activeOrgId, setActiveOrgId] = useState("LOIZzHkmJZRAs7XyTADz");
-  const { id } = useContext(UserContext);
+  const [value, setValue] = useState();
+  const { id, user } = useContext(UserContext);
 
-  const navigate = useNavigate();
+
   const api = useContext(OrgApiContext);
   useEffect(() => {
     if (id) {
-      if (activeOrgId) {
-        api.getOrgByIdSub(activeOrgId, id, org => {
-          setOrg(org);
+      if (user && user.activeOrgId) {
+        api.getOrgByIdSub(user.activeOrgId, id, org => {
+          return setValue({ orgId: org.id, org: org.data() });
         })
       }
     }
-  }, [api, activeOrgId, id])
-  const onChangeClick = () => {
-    navigate('/orgs')
-  }
+    setValue({ orgId: null, org: null });
 
-  const setActiveOrg = (orgId) => {
-    setActiveOrgId(orgId);
-  }
+  }, [api, id, user])
 
-  if (!org) return <Spinner />
+
   return (
-    <OrgContext.Provider value={{ orgId: org.id, org: org.data(), setActiveOrg }}>
-      org: {org.data().name}
-      <Button onClick={onChangeClick}>change</Button>
+    <OrgContext.Provider value={value}>
       {children}
     </OrgContext.Provider>
   )

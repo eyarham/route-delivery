@@ -1,22 +1,21 @@
+import { getDoc } from "firebase/firestore";
 import api from "../_common/api";
 
 const orgApi = (db) => {
 
   const { getByIdSub, createDoc, getDocsSub } = api(db, "orgs");
-  const create = async (name, drivers, customers, userId) => {
-    const id = crypto.randomUUID();
-    const newOrg = {
-      id,
+  const create = async (name, userId, isTrial) => {    
+    const newOrg = {    
       name,
-      drivers,
-      customers,
-      users: [userId]
+      users: [userId],
+      type: (isTrial? "trial": "prod")
     }
-    return await createDoc(newOrg, userId);
+     const docRef = await createDoc(newOrg, userId);
+     return await getDoc(docRef);
+
   }
 
   const getForUserSub = (userId, callback) => {
-
     return getDocsSub(docs => {
       const userDocs = docs.filter(d => d.data().users.indexOf(userId) > -1);
       callback(userDocs);

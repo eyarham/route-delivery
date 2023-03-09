@@ -122,6 +122,12 @@ const api = (db, collectionString) => {
     const snapshot = await getDocs(q);
     return snapshot.docs;
   }
+  const getByOrgIdSub = (orgId, callback) => {
+    return getDocsSub(docs => {
+      const orgDocs = docs.filter(d => d.data().orgId === orgId && d.data().isDeleted !== true)
+      callback(orgDocs);
+    })
+  }
 
   // const getDocsByCurrentUserFieldSub = (field, callback) => {
   //   return getCurrentSub(currentUser => {
@@ -147,6 +153,7 @@ const api = (db, collectionString) => {
     getDocsByFieldSub,
     getDocsByField,
     getDocsByFields,
+    getByOrgIdSub,
     confirmAddress,
     createDoc,
     getDocRef,

@@ -1,4 +1,4 @@
-import { Box, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import React from 'react';
 import { Outlet } from "react-router-dom";
@@ -19,10 +19,8 @@ const Layout = () => {
           <UserContextProvider>
             <OrgContextProvider>
               <MenuBar />
-              <Container>
-                <Box>
+              <Container maxWidth="xl">
                   <Outlet />
-                </Box>
               </Container>
             </OrgContextProvider>
           </UserContextProvider>

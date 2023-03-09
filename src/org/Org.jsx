@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import CustomersList from '../customers/CustomersList';
-import DriversList from '../drivers/DriversList';
+import { Link, useParams } from 'react-router-dom';
+import Customers from '../customers/Customers';
+import Drivers from '../drivers/Drivers';
 import { UserContext } from '../user/UserContextProvider';
 import Spinner from '../_utils/Spinner';
 import { OrgApiContext } from './OrgApiContextProvider';
@@ -18,12 +18,15 @@ const Org = () => {
     })
   }, [api, id, userId])
   if (!org) return <Spinner />
-  const { name, drivers, customers } = org.data()
+  const { name } = org.data()
   return (
     <div>Org: {name}
-      <DriversList drivers={drivers} />
-      <CustomersList customers={customers} />
+          <div>
+        <Link to='/dashboard'>dashboard</Link>
+      </div>
 
+      <Customers />
+      <Drivers />
     </div>
   )
 }

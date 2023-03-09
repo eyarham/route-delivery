@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { UserApiContext } from '../UserApiContextProvider';
 import { UserContext } from '../UserContextProvider';
 
 
 const Account = () => {
-  const { user, api, userId } = useContext(UserContext)
-  const { set, updateUserEmail } = api;
+  const { user,  userId } = useContext(UserContext)
+  const { set, updateUserEmail } = useContext(UserApiContext);
   const [updatedDisplayName, setDisplayName] = useState('');
   const [message, setMessage] = useState('');
   const [pronouns, setPronouns] = useState('');

@@ -1,7 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../user/UserContextProvider";
+import { useNavigate } from "react-router-dom";
+import { UserApiContext } from "../user/UserApiContextProvider";
 //import userApi from "../user/api";
 
 const SignUp = () => {
@@ -10,8 +10,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loginErrorMessage, setLoginErrorMessage] = useState();
-  const {  api } = useContext(UserContext);
-  const { createAccount } = api;
+
+  const { createAccount } = useContext(UserApiContext);
 
   const onCreateAccount = () => {
     if (password !== confirmPassword) return setLoginErrorMessage("passwords must match")
@@ -37,24 +37,21 @@ const SignUp = () => {
     setConfirmPassword(e.target.value);
   }
   return (
-    <div>
-      sign up or <Link to="/signin">log in to an existing account</Link>
-      <form>
-        <div>
-          <TextField sx={{ margin: 1 }} placeholder="email" onChange={changeEmail}></TextField>
-        </div>
-        <div>
-          <TextField sx={{ margin: 1 }} type="password" placeholder="password" onChange={changePassword}></TextField>
-        </div>
-        <div>
-          <TextField sx={{ margin: 1 }} type="password" placeholder="confirm password" onChange={changeConfirmPassword}></TextField>
-        </div>
-        <div>
-          <Button sx={{ margin: 1 }} onClick={onCreateAccount}>create new user</Button>
-        </div>
-      </form>
+    <form>
+      <div>
+        <TextField sx={{ margin: 1 }} placeholder="email" onChange={changeEmail}></TextField>
+      </div>
+      <div>
+        <TextField sx={{ margin: 1 }} type="password" placeholder="password" onChange={changePassword}></TextField>
+      </div>
+      <div>
+        <TextField sx={{ margin: 1 }} type="password" placeholder="confirm password" onChange={changeConfirmPassword}></TextField>
+      </div>
+      <div>
+        <Button sx={{ margin: 1 }} onClick={onCreateAccount}>create new user</Button>
+      </div>
       <div>{loginErrorMessage}</div>
-    </div>
+    </form>
   )
 }
 
