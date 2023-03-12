@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthPanel from '../auth/AuthPanel';
 import { UserContext } from '../user/UserContextProvider';
 
 const Home = () => {
@@ -27,12 +26,6 @@ const Home = () => {
       <p>everything is free but you do have to sign in to create a trial org</p>
       <Button onClick={onTryDemoClick} variant="contained" sx={{ m: 1 }}>try the demo org</Button>
       <Button onClick={onCreateTrialClick} disabled={!isLoggedIn} variant="contained" sx={{ m: 1 }}>start a trial org</Button>
-      {(!isLoggedIn) &&
-        <div>
-          create an account to get started
-          <AuthPanel />
-        </div>
-      }
     </div>
   )
 }

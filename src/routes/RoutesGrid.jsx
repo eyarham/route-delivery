@@ -29,8 +29,14 @@ const RoutesGrid = ({ routes }) => {
     setSelectedRoute();
   }
 
+  const onCancel=row=>{
+    
+  }
   const renderActionCell = e => {
     return <Button onClick={() => onViewButtonClick(e.row)}>View</Button>
+  }
+  const renderCancelCell = e => {
+    return <Button onClick={() => onCancel(e.row)}>cancel</Button>
   }
 
   const columns = [
@@ -42,7 +48,8 @@ const RoutesGrid = ({ routes }) => {
     },
     { field: 'driver', headerName: 'Assigned Driver', width: 160 },
     { field: 'stopsCount', headerName: '# Stops', type: 'number', },
-    { field: '', renderCell: renderActionCell }
+    { field: 'view', renderCell: renderActionCell },
+    { field: 'cancel', renderCell: renderCancelCell }
 
   ];
   if (!rows) return <Spinner />
