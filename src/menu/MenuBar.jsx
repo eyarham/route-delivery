@@ -10,6 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SignInInline from '../auth/SignInInline';
 import { OrgContext } from '../org/OrgContextProvider';
 import { UserContext } from '../user/UserContextProvider';
 import UserMenu from '../user/UserMenu';
@@ -27,14 +28,13 @@ const MenuBar = () => {
   //const pages = ['add new'];
   useEffect(() => {
     const pages = ['home'];
-    
+
     if (orgContext && orgContext.org) {
       pages.push('dashboard', 'orgs',)
       setHeaderText(orgContext.org.name)
       setHeaderTarget('/dashboard')
     }
-    else
-    {
+    else {
       setHeaderText('route delivery')
       setHeaderTarget('/')
 
@@ -156,6 +156,8 @@ const MenuBar = () => {
           >
             {headerText}
           </Typography>
+
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -167,6 +169,10 @@ const MenuBar = () => {
               </Button>
             ))}
           </Box>
+          {!user &&
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <SignInInline />
+            </Box>}
 
           <UserMenu />
         </Toolbar>

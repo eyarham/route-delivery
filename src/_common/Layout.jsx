@@ -7,6 +7,7 @@ import MenuBar from '../menu/MenuBar';
 import OrgContextProvider from '../org/OrgContextProvider';
 import UserContextProvider from '../user/UserContextProvider';
 import ApiContextProvider from './ApiContextProvider';
+import FooterBar from './FooterBar';
 
 const Layout = () => {
   return (
@@ -20,8 +21,9 @@ const Layout = () => {
             <OrgContextProvider>
               <MenuBar />
               <Container maxWidth="xl">
-                  <Outlet />
+                <Outlet />
               </Container>
+              <FooterBar />
             </OrgContextProvider>
           </UserContextProvider>
           {/* </AuthWrapper> */}
