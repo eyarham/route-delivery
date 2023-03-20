@@ -19,12 +19,9 @@ const RoutesGrid = ({ routes }) => {
   }, [routes])
 
   const [selectedRoute, setSelectedRoute] = useState();
-
-
   const onViewButtonClick = e => {
     setSelectedRoute(e);
   }
-
   const closeRoute = () => {
     setSelectedRoute();
   }

@@ -7,9 +7,9 @@ import Spinner from '../_utils/Spinner';
 const LayoutUser = () => {
   const { user } = useContext(UserContext);
   const orgContext = useContext(OrgContext);
-
   if (!user) return <Link to={"/signin"}>login or sign up</Link>
   if (!orgContext) return <Spinner />
+
   return (
     <Outlet />
   )
