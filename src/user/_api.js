@@ -42,7 +42,7 @@ const userApi = (db, auth) => {
   const getCurrentSub = (callback) => {
     return getAuthUserSub(user => {
       if (user) {
-        return getByAuthIdSub(user.uid, callback);
+        return getByAuthIdSub(user.uid, data => callback(data, user.email ));
       }
       else {
         return callback(null);

@@ -9,9 +9,9 @@ const UserContextProvider = ({ children }) => {
 
   const { getCurrentSub } = useContext(UserApiContext);
   useEffect(() => {
-    return getCurrentSub(user => {
+    return getCurrentSub((user, email) => {
       if (user) {
-        setValue({ id: user.id, userId: user.id, user: user.data() })
+        setValue({ id: user.id, userId: user.id, user: user.data(), email })
       }
       else {
         setValue({ id: null, user: null })

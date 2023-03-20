@@ -1,13 +1,15 @@
 import { Button } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Dashboard from '../dispatchers/Dashboard';
+import { OrgContext } from '../org/OrgContextProvider';
 import { UserContext } from '../user/UserContextProvider';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
-
+  const orgContext = useContext(OrgContext);
   useEffect(() => {
     setIsLoggedIn(userContext && userContext.user)
   }, [userContext]);
@@ -18,7 +20,7 @@ const Home = () => {
   const onCreateTrialClick = () => {
     navigate('/startTrial');
   }
-
+if(orgContext && orgContext.org) return <Dashboard />
   return (
     <div>
       <h2>route delivery</h2>

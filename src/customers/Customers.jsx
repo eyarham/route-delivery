@@ -27,7 +27,7 @@ const Customers = () => {
     await createOrder(customer, userId, orgId);
   }
   return (
-    <Paper sx={{ m: 1, p: 1 }}>
+    <Paper sx={{ m: 1, p: 1, minHeight:500 }}>
       <h4>Customers</h4>
       {!showNew && <Button onClick={toggleShowAdd}>add</Button>}
       {showNew && <NewCustomer  onCancel={toggleShowAdd} />}
