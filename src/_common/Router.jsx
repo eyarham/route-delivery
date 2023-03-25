@@ -7,7 +7,7 @@ import Config from '../config/Config';
 import Customer from '../customers/Customer';
 import Customers from '../customers/Customers';
 import Demo from '../demo/Demo';
-import Dashboard from '../dispatchers/Dashboard';
+import Dashboard from '../dashboards/Dashboard';
 import DriverAssign from '../drivers/DriverAssign';
 import Drivers from '../drivers/Drivers';
 import Home from '../home/Home';

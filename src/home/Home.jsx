@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Dashboard from '../dispatchers/Dashboard';
+import Dashboard from '../dashboards/Dashboard';
 import { OrgContext } from '../org/OrgContextProvider';
 import { UserContext } from '../user/UserContextProvider';
 

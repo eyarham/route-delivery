@@ -21,7 +21,6 @@ const OrgContextProvider = ({ children }) => {
 
   }, [api, id, user])
 
-
   return (
     <OrgContext.Provider value={value}>
       {children}
