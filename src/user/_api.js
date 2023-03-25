@@ -160,6 +160,10 @@ const userApi = (db, auth) => {
     await updateField(userId, { activeOrgId })
   }
 
+  const setDashboard = async (userId, dashboard)=>{
+    await updateField(userId, { dashboard })
+  }
+
   return {
     create,
     get,
@@ -179,7 +183,8 @@ const userApi = (db, auth) => {
     getDocsSub,
     setIsModerator,
     createAccount,
-    signIn
+    signIn,
+    setDashboard
   };
 
 }

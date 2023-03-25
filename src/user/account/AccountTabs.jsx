@@ -4,6 +4,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import DriverAssign from '../../drivers/DriverAssign';
 import Profile from './Profile';
 
 function TabPanel(props) {
@@ -50,7 +51,7 @@ export default function AccountTabs() {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="profile" {...a11yProps(0)} />
-          {/* <Tab label="my reviews" {...a11yProps(1)} iconPosition="end" /> */}
+          <Tab label="assignments" {...a11yProps(1)} iconPosition="end" />
         </Tabs>
 
       </Box>
@@ -58,6 +59,7 @@ export default function AccountTabs() {
         <Profile />
       </TabPanel>
       <TabPanel value={value} index={1}>
+      <DriverAssign />
       </TabPanel>
     </Box>
   );
