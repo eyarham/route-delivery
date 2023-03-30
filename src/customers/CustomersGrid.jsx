@@ -7,6 +7,8 @@ import Customer from './Customer';
 
 const CustomersGrid = ({ customers, onDelete, onCreateClick }) => {
   const [rows, setRows] = useState([]);
+  const [selectedRow, setSelectedRow] = useState();
+  const [selectedId, setSelectedId] = useState();
 
   useEffect(() => {
     const customerRows = customers.map(c => {
@@ -17,15 +19,15 @@ const CustomersGrid = ({ customers, onDelete, onCreateClick }) => {
     setRows(customerRows);
   }, [customers]);
 
-  const [selectedRow, setSelectedRow] = useState();
   const onViewButtonClick = e => {
-    setSelectedRow(e);
+    setSelectedRow(e.row);
+    setSelectedId(e.id);
   }
   const onViewClose = () => {
     setSelectedRow();
   }
   const renderViewCell = e => {
-    return <Button onClick={() => onViewButtonClick(e.row)}>View</Button>
+    return <Button onClick={() => onViewButtonClick(e)}>View</Button>
   }
   const onDeleteClick = row => {
     //show popup
@@ -51,7 +53,7 @@ const CustomersGrid = ({ customers, onDelete, onCreateClick }) => {
 
   if (selectedRow) return <div>
     <Button onClick={onViewClose}>Back</Button>
-    <Customer customer={selectedRow} />
+    <Customer customer={selectedRow} id={selectedId}/>
   </div>
   if (!customers) return <Spinner />
   return (

@@ -4,6 +4,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import CustomerAssign from '../../customers/CustomerAssign';
 import DriverAssign from '../../drivers/DriverAssign';
 import Profile from './Profile';
 
@@ -52,6 +53,8 @@ export default function AccountTabs() {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="profile" {...a11yProps(0)} />
           <Tab label="assignments" {...a11yProps(1)} iconPosition="end" />
+          <Tab label="assignments" {...a11yProps(2)} iconPosition="end" />
+
         </Tabs>
 
       </Box>
@@ -60,6 +63,9 @@ export default function AccountTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
       <DriverAssign />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+      <CustomerAssign />
       </TabPanel>
     </Box>
   );

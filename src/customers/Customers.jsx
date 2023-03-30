@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { OrdersApiContext } from '../orders/OrgApiContextProvider';
 import { OrgContext } from '../org/OrgContextProvider';
 import { UserContext } from '../user/UserContextProvider';
-import { CustomersApiContext } from './CustomerApiContextProvider';
+import { CustomersApiContext } from './CustomersApiContextProvider';
 import CustomersGrid from './CustomersGrid';
 import NewCustomer from './NewCustomer';
 
