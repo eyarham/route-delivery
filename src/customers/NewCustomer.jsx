@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { OrgContext } from '../org/OrgContextProvider';
 import { UserContext } from '../user/UserContextProvider';
 import Autofill from '../_utils/AddressAutofill';
-import { CustomersApiContext } from './CustomerApiContextProvider';
+import { CustomersApiContext } from './CustomersApiContextProvider';
 
 const NewCustomer = ({  onCancel }) => {
   const [name, setName] = useState('');
